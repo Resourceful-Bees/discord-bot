@@ -1,27 +1,30 @@
-// require the discord.js module
+const fs = require('fs');
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 
-// create a new Discord client
 const client = new Discord.Client();
+client.commands = new Discord.Collection();
+client.cooldowns = new Discord.Collection();
 
-// when the client is ready, run this code
-// this event will only trigger one time after logging in
-client.once('ready', () => {
-    console.log('Ready!');
-});
+const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 
-client.on('message', message => {
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
-
-    const args = message.content.slice(prefix.length).trim().split(/ +/);
-    const command = args.shift().toLowerCase();
-
-    if (message.content === '!ping') {
-        // send back "Pong." to the channel the message was sent in
-        message.channel.send('Pong.');
+for (const file of eventFiles) {
+    const event = require(`./events/${file}`);
+    if (event.once) {
+        client.once(event.name, (...args) => event.execute(...args, client));
+    } else {
+        client.on(event.name, (...args) => event.execute(...args, client));
     }
-});
+}
 
-// login to Discord with your app's token
+const commandFolders = fs.readdirSync('./commands');
+
+for (const folder of commandFolders) {
+    const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
+    for (const file of commandFiles) {
+        const command = require(`./commands/${folder}/${file}`);
+        client.commands.set(command.name, command);
+    }
+}
+
 client.login(token);
