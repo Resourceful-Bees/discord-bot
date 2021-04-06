@@ -8,3 +8,4 @@
 /httpRequests/
 /sonarIssues.xml
 /sonarlint/issuestore/index.pb
+/sonarlint/
