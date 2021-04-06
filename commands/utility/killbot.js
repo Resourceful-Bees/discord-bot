@@ -3,7 +3,6 @@ module.exports = {
     description: 'Kills running bot',
     permissions: 'ADMINISTRATOR',
     execute(message) {
-        message.channel.send(`Killing Beekeeper bot`);
-        process.kill(process.pid);
+        message.channel.send(`Killing Beekeeper bot`).then(() => process.kill(process.pid));
     }
 };
