@@ -1,4 +1,5 @@
-require('daemon')();
+const daemonizeProcess = require('daemonize-process');
+daemonizeProcess();
 
 const fs = require('fs');
 const Discord = require('discord.js');
