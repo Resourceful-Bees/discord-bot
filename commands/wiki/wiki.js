@@ -4,5 +4,5 @@ module.exports = {
     cooldown: 5,
     execute(message) {
         message.channel.send("https://wiki.resourcefulbees.com");
-    },
+    }
 };

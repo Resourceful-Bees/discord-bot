@@ -5,5 +5,5 @@ module.exports = {
     execute(message) {
         message.channel.send("no?");
         message.channel.send("okay");
-    },
+    }
 };

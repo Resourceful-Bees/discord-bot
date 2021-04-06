@@ -5,5 +5,5 @@ module.exports = {
     aliases: ['villager'],
     execute(message) {
         message.channel.send("A villager can be given the Beekeeper profession with the use of any nest or beehive.");
-    },
+    }
 };
