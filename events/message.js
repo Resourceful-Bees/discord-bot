@@ -25,6 +25,21 @@ module.exports = {
             }
         }
 
+        if (command.roles) {
+            const authorRoles = message.member.roles.cache;
+            let hasRoles = false;
+            for (let role of command.roles) {
+                if (authorRoles.has(role)) {
+                    hasRoles = true;
+                    break;
+                }
+            }
+
+            if (!authorRoles || !hasRoles) {
+                return message.reply('You do not have the role(s) to do this!');
+            }
+        }
+
         if (command.args && !args.length) {
             let reply = `You didn't provide any arguments, ${message.author}!`;
 
