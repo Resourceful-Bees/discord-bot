@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.5.3"
+    "discord.js": "^12.5.3",
+    "mc-curseforge-api": "^2.2.3"
   },
   "devDependencies": {
     "daemonize-process": "^3.0.0",
