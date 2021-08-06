@@ -1,10 +1,9 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, token } = require('./config.json');
+const {token} = require('./config.json');
+const {Intents} = require("discord.js");
 
-const Curseforge = require('mc-curseforge-api')
-
-const client = new Discord.Client();
+const client = new Discord.Client({intents: [Intents.FLAGS.GUILDS]});
 client.commands = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
 
@@ -19,14 +18,17 @@ for (const file of eventFiles) {
     }
 }
 
-const commandFolders = fs.readdirSync('./commands');
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-for (const folder of commandFolders) {
-    const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
-    for (const file of commandFiles) {
-        const command = require(`./commands/${folder}/${file}`);
-        client.commands.set(command.name, command);
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+    if (command.id) {
+        client.commands.set(command.id, command);
     }
 }
 
 client.login(token);
+
+process.on('uncaughtException', function (err) {
+    console.error(err.stack)
+}
