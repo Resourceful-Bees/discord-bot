@@ -1,4 +1,4 @@
-const { MessageButton, MessageSelectMenu, MessageActionRow } = require("discord.js");
+const { MessageButton, MessageSelectMenu, MessageActionRow, SelectMenuInteraction} = require("discord.js");
 const { roleSelections } = require("../config.json")
 
 
@@ -22,7 +22,7 @@ module.exports = {
         const roleId = interaction.values[0];
         if (interaction.customId.startsWith("add")){
             interaction.member.roles.add(roleId);
-        }else {
+        }else if (interaction.member.roles.cache.has(roleId)) {
             interaction.member.roles.remove(roleId);
         }
         interaction.reply({content: "Role Added! You can Dismiss this.", ephemeral: true});
