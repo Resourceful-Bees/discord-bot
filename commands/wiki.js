@@ -3,7 +3,7 @@ module.exports = {
     execute(interaction) {
         let message = "Unknown category, command code needs to be updated."
 
-        switch (interaction.options.get('category')?.value) {
+        switch (interaction.options.getString('category')) {
             case 'beedata':
                 message = "https://wiki.resourcefulbees.com/en/1.16.3/bee_data/custom_bee_data/";
                 break;
@@ -43,7 +43,7 @@ module.exports = {
 
         interaction.reply({
             content: message,
-            ephemeral: interaction.options.get('silent', false) && interaction.options.get('silent').value
+            ephemeral: interaction.options.getBoolean('silent') != null && interaction.options.getBoolean('silent')
         })
     }
 }

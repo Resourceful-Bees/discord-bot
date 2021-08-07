@@ -1,9 +1,9 @@
 module.exports = {
     id: 'help',
     execute(interaction) {
-        let message = "Unknown category, command code needs to be updated."
+        let message = "Unknown category, command code needs to be updated.";
 
-        switch (interaction.options.get('category').value) {
+        switch (interaction.options.getString('category', true)) {
             case 'villager':
                 message = "A villager can be given the Beekeeper profession with the use of any nest or beehive.";
                 break;
@@ -37,7 +37,7 @@ module.exports = {
 
         interaction.reply({
             content: message,
-            ephemeral: interaction.options.get('silent', false) && interaction.options.get('silent').value
+            ephemeral: interaction.options.getBoolean('silent') != null && interaction.options.getBoolean('silent')
         })
     }
 }

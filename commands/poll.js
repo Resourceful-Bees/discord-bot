@@ -5,6 +5,11 @@ const emojis = ["1️⃣","2️⃣","3️⃣","4️⃣","5️⃣","6️⃣","7�
 module.exports = {
     id: 'poll',
     execute(interaction) {
+        if (!interaction.member.roles.cache.has("738561223385415811")){
+            interaction.reply({content: "Dont have perms.", ephemeral: true});
+            return; //Back up just in case discord doesnt work right.
+        }
+
         const embed = new MessageEmbed();
         let desc = [];
         for (let i = 1; i <= 10; i++) {
@@ -17,12 +22,9 @@ module.exports = {
         embed.setDescription(desc.join("\n"));
         embed.setColor('ORANGE')
 
-        interaction.reply({content: "Poll Created!", ephemeral: true}).then(() => {
-            interaction.channel.send({embeds: [embed]}).then(message => {
-                for (let i = 0; i < desc.length; i++) {
-                    message.react(emojis[i]);
-                }
-            })
+        interaction.options.getChannel('channel', true).send({embeds: [embed]}).then(message => {
+            interaction.reply({content: "Poll Created!", ephemeral: true})
+            for (let i = 0; i < desc.length; i++) message.react(emojis[i]);
         });
     }
 }
