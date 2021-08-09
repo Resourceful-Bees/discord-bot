@@ -1,4 +1,3 @@
-const roles = require("../commands/roles")
 module.exports = {
     name: 'interactionCreate',
     execute(interaction) {
@@ -8,14 +7,14 @@ module.exports = {
             command.execute(interaction);
         }
         if (interaction.isButton()) {
-            if (interaction.customId.endsWith("_roles_menu")) {
-                roles.changeMenu(interaction);
-            }
+            const button = interaction.client.buttons.get(interaction.customId);
+            if (!button) return;
+            button.execute(interaction);
         }
         if (interaction.isSelectMenu()) {
-            if (interaction.customId.endsWith("_roles_selection")){
-                roles.executeSelection(interaction);
-            }
+            const menu = interaction.client.selectionMenus.get(interaction.customId);
+            if (!menu) return;
+            menu.execute(interaction);
         }
     }
 }
