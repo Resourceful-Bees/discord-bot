@@ -17,16 +17,17 @@ module.exports = {
                     selectionBox.setMinValues(1);
 
                     let options = [];
-                    for (let thread of Object.keys(threads)) {
-                        options.push({
-                            label: threads[thread],
-                            value: thread
-                        });
-                    }
                     for (const message of Object.keys(messages)) {
                         options.push({
                             label: messages[message].label,
                             value: `message_${message}`
+                        });
+                    }
+
+                    for (let thread of Object.keys(threads)) {
+                        options.push({
+                            label: threads[thread],
+                            value: thread
                         });
                     }
 
