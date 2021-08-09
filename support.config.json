@@ -16,7 +16,7 @@
   },
   "messages": {
     "issues": {
-      "label": "Issues & Bugs",
+      "label": "Bugs & Feature Requests",
       "message": {
         "embeds": [
           {
