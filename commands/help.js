@@ -21,7 +21,7 @@ module.exports = {
                 message = "Bees can mutate blocks into other types of blocks after having pollinated a flower and when flying over the block it can mutate. It can do this a certain number of times before needing to enter a hive and starting the process over. The best setup is a long tunnel structure with the flower and hive on opposite ends. You can see if a bee has a mutation by checking the beepedia or JEI.";
                 break;
             case 'performant':
-                message = "Bees can mutate blocks into other types of blocks after having pollinated a flower and when flying over the block it can mutate. It can do this a certain number of times before needing to enter a hive and starting the process over. The best setup is a long tunnel structure with the flower and hive on opposite ends. You can see if a bee has a mutation by checking the beepedia or JEI.";
+                message = "Because of the methods in which performant chooses to \"optimize\" the game, it is incompatible with our mod. If you experience issues and have this mod installed please reproduce the issues **without** the mod installed before requesting support. It is also recommended to simply remove the mod as it doesn't actually do *anything* to improve performance and is just a mere illusion.";
                 break;
             case 'skybees':
                 message = "To fix weird bee issues in the Sky Bees modpack, update Resourceful Bees to 0.6.7.2b then update forge to a newer version. Finally, fix a color value in the sieve bee json file by adding a `#` to it.";
