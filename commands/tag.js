@@ -1,11 +1,11 @@
 const {getCommands} = require("../handlers/customcommands");
 module.exports = {
-    id: 'wiki',
+    id: 'tag',
     autoComplete: true,
     execute(interaction) {
-        const category = interaction.options.getString('category', true);
-        let message = getCommands("wiki").get(category)
-        if (!message) message = "https://wiki.resourcefulbees.com";
+        const name = interaction.options.getString('name', true);
+        let message = getCommands("tag").get(name)
+        if (!message) message = "Unknown tag.";
 
         interaction.reply({
             content: message,
@@ -14,21 +14,21 @@ module.exports = {
     },
     autocomplete(interaction) {
         const focusedValue = interaction.options.getFocused();
-        const choices = Array.from(getCommands("wiki").keys());
+        const choices = Array.from(getCommands("tag").keys());
         const filtered = choices.filter(choice => choice.startsWith(focusedValue));
         interaction.respond(filtered.map(choice => ({ name: choice, value: choice })));
     }
 }
 
 const commandData = {
-    "name": "wiki",
-    "description": "Responds with the wiki for a specific category.",
+    "name": "tag",
+    "description": "Random collection of quick responses.",
     "options": [
         {
             "type": 3,
-            "name": "category",
-            "description": "The wiki category",
-            "required": false,
+            "name": "name",
+            "description": "The name of the tag",
+            "required": true,
             "autocomplete": true
         },
         {

@@ -1,22 +1,22 @@
-const { updateRoles } = require("../config.json");
+const { addAbleRolesRole, roleSelections } = require("../config.json");
 module.exports = {
-    ids: ['add_roles_selection', 'remove_roles_selection'],
+    id: "roles_selection",
     execute(interaction) {
         if (!interaction.inGuild()) return interaction.reply({content: "This is a guild only menu!", ephemeral: true});
-
-        const roleId = interaction.values[0];
-        if (interaction.customId.startsWith("add")){
-            interaction.member.roles.add(roleId).catch(() => {});
-            if (updateRoles.includes(roleId)) interaction.member.roles.add("873346594446131251").catch(() => {});
-        }else if (interaction.member.roles.cache.has(roleId)) {
-            interaction.member.roles.remove(roleId).catch(() => {});
-            for (let i in updateRoles) {
-                if (interaction.member.roles.cache.has(updateRoles[i])) break;
-                if (i === updateRoles.length - 1) {
-                    interaction.member.roles.remove("873346594446131251").catch(() => {});
-                }
-            }
+        const values = interaction.values;
+        let roles = interaction.member.roles;
+        if (values.length === 0 && roles.cache.has(addAbleRolesRole)) {
+            roles.remove(addAbleRolesRole).catch(() => {})
+        } else if (values.length > 0 && !roles.cache.has(addAbleRolesRole)) {
+            roles.add(addAbleRolesRole).catch(() => {})
         }
-        interaction.reply({content: "Role Added! You can Dismiss this.", ephemeral: true});
+        const rolesInSelection = Object.keys(roleSelections)
+        const rolesToRemove = rolesInSelection.filter(id =>roles.cache.has(id) && !values.includes(id));
+        const rolesToAdd = values.filter(id => rolesInSelection.includes(id) && !roles.cache.has(id))
+
+        rolesToRemove.forEach(id => roles.remove(id).catch(() => {}))
+        rolesToAdd.forEach(id => roles.add(id).catch(() => {}))
+
+        interaction.reply({content: "Roles changed! You can Dismiss these.", ephemeral: true});
     }
 }

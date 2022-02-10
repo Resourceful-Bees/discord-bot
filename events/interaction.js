@@ -6,15 +6,15 @@ module.exports = {
             if (!command) return;
             command.execute(interaction);
         }
-        if (interaction.isButton()) {
-            const button = interaction.client.buttons.get(interaction.customId);
-            if (!button) return;
-            button.execute(interaction);
-        }
         if (interaction.isSelectMenu()) {
             const menu = interaction.client.selectionMenus.get(interaction.customId);
             if (!menu) return;
             menu.execute(interaction);
+        }
+        if (interaction.isAutocomplete()) {
+            const autoComplete = interaction.client.autoComplete.get(interaction.commandName);
+            if (!autoComplete) return;
+            autoComplete.autocomplete(interaction)
         }
     }
 }

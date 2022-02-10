@@ -1,12 +1,14 @@
 const fs = require('fs');
-const Discord = require('discord.js');
 const {token} = require('./config.json');
-const {Intents} = require("discord.js");
+const {Intents, Client, Collection} = require("discord.js");
+const {loadCommandsFromDisk} = require("./handlers/customcommands");
 
-const client = new Discord.Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS]});
-client.commands = new Discord.Collection();
-client.buttons = new Discord.Collection();
-client.selectionMenus = new Discord.Collection();
+const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MEMBERS]});
+client.commands = new Collection();
+client.autoComplete = new Collection();
+client.selectionMenus = new Collection();
+
+loadCommandsFromDisk()
 
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
 
@@ -27,20 +29,15 @@ for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     if (command.id) {
         client.commands.set(command.id, command);
+        if (command.autoComplete) {
+            client.autoComplete.set(command.id, command)
+        }
     }else if (command.ids) {
         for (let id of command.ids) {
             client.commands.set(id, command);
-        }
-    }
-}
-
-for (const file of fs.readdirSync('./buttons').filter(file => file.endsWith('.js'))) {
-    const button = require(`./buttons/${file}`);
-    if (button.id) {
-        client.buttons.set(button.id, button);
-    }else if (button.ids) {
-        for (let id of button.ids) {
-            client.buttons.set(id, button);
+            if (command.autoComplete) {
+                client.autoComplete.set(id, command)
+            }
         }
     }
 }
