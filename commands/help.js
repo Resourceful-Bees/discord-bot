@@ -29,7 +29,7 @@ const commandData = {
             "name": "category",
             "description": "The help category",
             "required": true,
-            "autocomplete": true,
+            "autocomplete": true
         },
         {
             "type": 5,

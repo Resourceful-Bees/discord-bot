@@ -1,4 +1,4 @@
-const { addAbleRolesRole, roleSelections } = require("../config.json");
+const { addAbleRolesRole, roleSelections } = require("../roles.config.json");
 module.exports = {
     id: "roles_selection",
     execute(interaction) {
