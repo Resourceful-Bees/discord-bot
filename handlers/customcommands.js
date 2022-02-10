@@ -22,7 +22,7 @@ module.exports = {
     removeCommandFromCategory(category, command) {
         let mapCategory = commands.get(category);
         if (!mapCategory) return;
-        mapCategory.remove(command)
+        mapCategory.delete(command)
         let json = {}
         commands.forEach((v, k) => {
             let data = {}
