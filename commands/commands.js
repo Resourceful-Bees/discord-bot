@@ -1,4 +1,4 @@
-const {getCommands, addCommandToCategory} = require("../handlers/customcommands");
+const {getCommands, addCommandToCategory, removeCommandFromCategory} = require("../handlers/customcommands");
 const {Permissions} = require("discord.js");
 module.exports = {
     id: 'command',
@@ -16,11 +16,8 @@ module.exports = {
         if (operation === "remove") {
             const commands = getCommands(category);
             if (commands) {
-                if (commands.delete(command)) {
-                    interaction.reply({content: "Command successfully deleted!", ephemeral: true})
-                } else {
-                    interaction.reply({content: "Command does not exist.", ephemeral: true})
-                }
+                interaction.reply({content: "Command successfully deleted!", ephemeral: true})
+                removeCommandFromCategory(category, command)
             }else {
                 interaction.reply({content: "Command category does not exist.", ephemeral: true})
             }

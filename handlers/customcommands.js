@@ -19,6 +19,18 @@ module.exports = {
         })
         fs.writeFile('commands.config.json', JSON.stringify(json, null, 4), () => {})
     },
+    removeCommandFromCategory(category, command) {
+        let mapCategory = commands.get(category);
+        if (!mapCategory) return;
+        mapCategory.remove(command)
+        let json = {}
+        commands.forEach((v, k) => {
+            let data = {}
+            v.forEach((msg, sub) => data[sub] = msg)
+            json[k] = data
+        })
+        fs.writeFile('commands.config.json', JSON.stringify(json, null, 4), () => {})
+    },
     loadCommandsFromDisk() {
         fs.readFile('commands.config.json', (err, data) => {
             const json = JSON.parse(data.toString());
