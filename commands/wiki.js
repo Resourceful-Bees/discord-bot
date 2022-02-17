@@ -28,7 +28,7 @@ const commandData = {
             "type": 3,
             "name": "category",
             "description": "The wiki category",
-            "required": false,
+            "required": true,
             "autocomplete": true
         },
         {
