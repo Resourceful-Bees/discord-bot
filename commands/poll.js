@@ -25,6 +25,12 @@ module.exports = {
         interaction.options.getChannel('channel', true).send({embeds: [embed]}).then(message => {
             interaction.reply({content: "Poll Created!", ephemeral: true})
             for (let i = 0; i < desc.length; i++) message.react(emojis[i]);
+
+            message.channel.threads.create({
+                name: "Poll Thread",
+                startMessage: message,
+                autoArchiveDuration: "MAX"
+            })
         });
     }
 }
