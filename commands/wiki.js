@@ -3,8 +3,8 @@ module.exports = {
     id: 'wiki',
     autoComplete: true,
     execute(interaction) {
-        const category = interaction.options.getString('category', true);
-        let message = getCommands("wiki").get(category)
+        const category = interaction.options.getString('category', false);
+        let message = !category ? undefined : getCommands("wiki").get(category)
         if (!message) message = "https://wiki.resourcefulbees.com";
 
         interaction.reply({
@@ -28,7 +28,7 @@ const commandData = {
             "type": 3,
             "name": "category",
             "description": "The wiki category",
-            "required": true,
+            "required": false,
             "autocomplete": true
         },
         {
